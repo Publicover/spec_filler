@@ -1,0 +1,454 @@
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema.define(version: 20190508030136) do
+
+  create_table "constituents", primary_key: "name", force: :cascade do |t|
+    t.string   "cas_no",     limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "constituents", ["cas_no"], name: "index_constituents_on_cas_no", using: :btree
+
+  create_table "customer_sites", force: :cascade do |t|
+    t.string   "customer_no", limit: 20
+    t.string   "site_no",     limit: 10
+    t.string   "name",        limit: 255
+    t.string   "address1",    limit: 255
+    t.string   "address2",    limit: 255
+    t.string   "city",        limit: 255
+    t.string   "state",       limit: 255
+    t.string   "zip",         limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "phone",       limit: 255
+    t.string   "email",       limit: 255
+    t.string   "contact",     limit: 255
+  end
+
+  add_index "customer_sites", ["customer_no"], name: "index_customer_sites_on_customer_no", using: :btree
+  add_index "customer_sites", ["site_no"], name: "index_customer_sites_on_site_no", using: :btree
+
+  create_table "customers", primary_key: "customer_no", force: :cascade do |t|
+    t.boolean  "broker",                  limit: 1
+    t.string   "broker_customer_no",      limit: 20
+    t.string   "name",                    limit: 255
+    t.string   "address1",                limit: 255
+    t.string   "address2",                limit: 255
+    t.string   "city",                    limit: 255
+    t.string   "state",                   limit: 255
+    t.string   "zip",                     limit: 255
+    t.string   "email",                   limit: 255
+    t.string   "phone",                   limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "epa_id",                  limit: 15
+    t.string   "technical_contact",       limit: 100
+    t.string   "salesperson",             limit: 10,  default: ""
+    t.string   "sic_code",                limit: 10
+    t.string   "naics_code",              limit: 10
+    t.string   "name2",                   limit: 255
+    t.string   "name1a",                  limit: 255
+    t.string   "manifest_name",           limit: 255
+    t.string   "manifest_address",        limit: 255
+    t.string   "manifest_address2",       limit: 255
+    t.string   "manifest_city",           limit: 255
+    t.string   "manifest_state",          limit: 255
+    t.string   "manifest_zip",            limit: 255
+    t.string   "contact",                 limit: 255
+    t.string   "technical_contact_email", limit: 255
+    t.string   "technical_contact_phone", limit: 255
+  end
+
+  create_table "drivers", primary_key: "code", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "epa_code_subcategories", id: false, force: :cascade do |t|
+    t.string   "parent_epa_code", limit: 20,  default: "",    null: false
+    t.string   "code",            limit: 10,  default: "",    null: false
+    t.string   "description",     limit: 255
+    t.boolean  "active",          limit: 1,   default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "epa_codes", primary_key: "code", force: :cascade do |t|
+    t.string   "description", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "form_codes", primary_key: "code", force: :cascade do |t|
+    t.string   "description", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "mm_ship_codes", primary_key: "code", force: :cascade do |t|
+    t.string   "description", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "navision_imports", force: :cascade do |t|
+    t.text     "xml",        limit: 65535
+    t.boolean  "processed",  limit: 1,     default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "profile_attachments", force: :cascade do |t|
+    t.integer  "profile_id",              limit: 4
+    t.string   "attachment_file_name",    limit: 255
+    t.string   "attachment_content_type", limit: 255
+    t.integer  "attachment_file_size",    limit: 4
+    t.datetime "attachment_updated_at"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "profile_attachments", ["profile_id"], name: "index_profile_attachments_on_profile_id", using: :btree
+
+  create_table "profile_constituents", force: :cascade do |t|
+    t.integer  "profile_id",         limit: 4
+    t.string   "name",               limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "cas_no",             limit: 255
+    t.integer  "line_no",            limit: 4
+    t.integer  "nos_seq",            limit: 4
+    t.decimal  "concentration_low",              precision: 10, scale: 2
+    t.decimal  "concentration_high",             precision: 10, scale: 2
+    t.string   "concentration_uom",  limit: 30
+  end
+
+  add_index "profile_constituents", ["name"], name: "index_profile_constituents_on_name", using: :btree
+  add_index "profile_constituents", ["profile_id"], name: "index_profile_constituents_on_profile_id", using: :btree
+
+  create_table "profile_customer_constituents", force: :cascade do |t|
+    t.integer  "profile_id",         limit: 4
+    t.string   "name",               limit: 255
+    t.string   "cas_no",             limit: 255
+    t.integer  "line_no",            limit: 4
+    t.integer  "nos_seq",            limit: 4
+    t.decimal  "concentration_low",              precision: 10, scale: 2
+    t.decimal  "concentration_high",             precision: 10, scale: 2
+    t.string   "concentration_uom",  limit: 30
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+  end
+
+  add_index "profile_customer_constituents", ["profile_id"], name: "index_profile_customer_constituents_on_profile_id", using: :btree
+
+  create_table "profile_epa_codes", force: :cascade do |t|
+    t.integer  "profile_id",       limit: 4
+    t.string   "code",             limit: 255
+    t.string   "subcategory_code", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "sequence_number",  limit: 4
+  end
+
+  add_index "profile_epa_codes", ["code"], name: "index_profile_epa_codes_on_code", using: :btree
+  add_index "profile_epa_codes", ["profile_id"], name: "index_profile_epa_codes_on_profile_id", using: :btree
+  add_index "profile_epa_codes", ["subcategory_code"], name: "index_profile_epa_codes_on_subcategory_code", using: :btree
+
+  create_table "profile_review_fields", force: :cascade do |t|
+    t.integer  "profile_id", limit: 4
+    t.string   "field",      limit: 255
+    t.string   "comment",    limit: 255
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "profile_review_fields", ["profile_id"], name: "index_profile_review_fields_on_profile_id", using: :btree
+
+  create_table "profile_underlying_constituents", force: :cascade do |t|
+    t.integer  "profile_id", limit: 4
+    t.string   "code",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "profile_underlying_constituents", ["code"], name: "index_profile_underlying_constituents_on_code", using: :btree
+  add_index "profile_underlying_constituents", ["profile_id"], name: "index_profile_underlying_constituents_on_profile_id", using: :btree
+
+  create_table "profiles", force: :cascade do |t|
+    t.string   "customer_no",                         limit: 20
+    t.string   "profile_code",                        limit: 20
+    t.date     "received_on"
+    t.date     "profile_signed_on"
+    t.string   "process_code",                        limit: 20
+    t.date     "recertification_due_on"
+    t.boolean  "recertification",                     limit: 1,                            default: false
+    t.boolean  "active",                              limit: 1,                            default: false
+    t.boolean  "lab_pack",                            limit: 1,                            default: false
+    t.boolean  "include_on_biennial",                 limit: 1,                            default: false
+    t.string   "waste_name",                          limit: 255
+    t.string   "process_generating_waste",            limit: 100
+    t.string   "mm_ship_code",                        limit: 10
+    t.string   "source_code",                         limit: 10
+    t.string   "form_code",                           limit: 10
+    t.string   "naics_code",                          limit: 10
+    t.string   "physical_state_1",                    limit: 100
+    t.string   "physical_state_2",                    limit: 100
+    t.string   "layers",                              limit: 100
+    t.string   "viscosity_value",                     limit: 20
+    t.string   "waste_water",                         limit: 255,                          default: ""
+    t.string   "total_solids_low",                    limit: 255,                          default: ""
+    t.string   "total_solids_high",                   limit: 255,                          default: ""
+    t.string   "total_solids_description",            limit: 100
+    t.decimal  "btu_lb_low",                                      precision: 10, scale: 2, default: 0.0
+    t.decimal  "btu_lb_high",                                     precision: 10, scale: 2, default: 0.0
+    t.decimal  "pH_low",                                          precision: 10, scale: 2, default: 0.0
+    t.decimal  "pH_high",                                         precision: 10, scale: 2, default: 0.0
+    t.string   "color",                               limit: 40
+    t.string   "flash_point",                         limit: 100
+    t.string   "boiling_point",                       limit: 100
+    t.boolean  "reactive",                            limit: 1,                            default: false
+    t.string   "reactive_description",                limit: 100
+    t.string   "odor",                                limit: 100
+    t.string   "odor_description",                    limit: 100
+    t.integer  "halogen_low",                         limit: 4,                            default: 0
+    t.integer  "halogen_high",                        limit: 4,                            default: 0
+    t.boolean  "halogen_chlorine",                    limit: 1,                            default: false
+    t.boolean  "halogen_iodine",                      limit: 1,                            default: false
+    t.boolean  "halogen_fluorine",                    limit: 1,                            default: false
+    t.boolean  "halogen_bromine",                     limit: 1,                            default: false
+    t.boolean  "cyanide",                             limit: 1,                            default: false
+    t.decimal  "cyanide_low",                                     precision: 10, scale: 2
+    t.decimal  "cyanide_high",                                    precision: 10, scale: 2
+    t.string   "cyanide_ppm",                         limit: 10
+    t.string   "cyanide_description",                 limit: 30,                           default: ""
+    t.boolean  "pcb",                                 limit: 1,                            default: false
+    t.decimal  "pcb_low",                                         precision: 10, scale: 2
+    t.decimal  "pcb_high",                                        precision: 10, scale: 2
+    t.string   "pcb_ppm",                             limit: 10
+    t.string   "pcb_description",                     limit: 30
+    t.boolean  "used_oil",                            limit: 1,                            default: false
+    t.string   "metals",                              limit: 100
+    t.string   "arsenic_ppm",                         limit: 10
+    t.string   "barium_ppm",                          limit: 10
+    t.string   "cadmium_ppm",                         limit: 10
+    t.string   "chromium_ppm",                        limit: 10
+    t.string   "lead_ppm",                            limit: 10
+    t.string   "mercury_ppm",                         limit: 10
+    t.string   "selenium_ppm",                        limit: 10
+    t.string   "silver_ppm",                          limit: 10
+    t.string   "antimony_ppm",                        limit: 10
+    t.string   "thallium_ppm",                        limit: 10
+    t.string   "nickel_ppm",                          limit: 10
+    t.string   "beryllium_ppm",                       limit: 10
+    t.string   "constituent_percentage_based_on",     limit: 100
+    t.boolean  "msds",                                limit: 1,                            default: false
+    t.boolean  "small_pack_in_large_pack",            limit: 1,                            default: false
+    t.boolean  "metal_powder",                        limit: 1,                            default: false
+    t.boolean  "additional_restrictions",             limit: 1,                            default: false
+    t.string   "additional_restrictions_description", limit: 100,                          default: ""
+    t.boolean  "additional_safety",                   limit: 1,                            default: false
+    t.string   "additional_safety_description",       limit: 100
+    t.string   "health_alert_symbol",                 limit: 1
+    t.string   "flammability_alert_symbol",           limit: 1
+    t.string   "reactivity_alert_symbol",             limit: 1
+    t.string   "ingestion_toxicity",                  limit: 1
+    t.string   "inhalation_toxicity",                 limit: 1
+    t.string   "absorption_toxicity",                 limit: 10
+    t.string   "incompatabilities",                   limit: 100
+    t.integer  "anticipated_volume",                  limit: 4
+    t.string   "uom",                                 limit: 100
+    t.string   "size",                                limit: 255,                          default: ""
+    t.string   "container_spec",                      limit: 100
+    t.string   "type_of_container",                   limit: 100
+    t.string   "pack_ship_frequency",                 limit: 100
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "status",                              limit: 20
+    t.string   "profile_type",                        limit: 20
+    t.integer  "csr_id",                              limit: 4
+    t.integer  "psn_in_entry_no",                     limit: 4
+    t.string   "psn_in_name",                         limit: 220
+    t.string   "psn_in_un_na",                        limit: 10
+    t.string   "psn_in_haz_class",                    limit: 30
+    t.string   "psn_in_pack_group_code",              limit: 10
+    t.string   "psn_in_erg_page_no",                  limit: 10
+    t.integer  "psn_out_entry_no",                    limit: 4
+    t.string   "psn_out_name",                        limit: 220
+    t.string   "psn_out_un_na",                       limit: 10
+    t.string   "psn_out_haz_class",                   limit: 30
+    t.string   "psn_out_pack_group_code",             limit: 10
+    t.string   "psn_out_erg_page_no",                 limit: 10
+    t.boolean  "synced",                              limit: 1,                            default: false
+    t.datetime "synced_at"
+    t.string   "size_other_description",              limit: 255
+    t.string   "pH_range",                            limit: 100
+    t.string   "btu_lbs",                             limit: 100
+    t.decimal  "flash_point_low",                                 precision: 10, scale: 2
+    t.decimal  "flash_point_high",                                precision: 10, scale: 2
+    t.boolean  "psn_in_waste",                        limit: 1,                            default: false
+    t.boolean  "psn_out_waste",                       limit: 1,                            default: false
+    t.decimal  "rq_amount",                                       precision: 10, scale: 2
+    t.string   "rq_description",                      limit: 250
+    t.string   "product_code",                        limit: 20,                           default: ""
+    t.string   "psn_in_sub_haz_class_1",              limit: 30
+    t.string   "psn_in_sub_haz_class_2",              limit: 30
+    t.string   "psn_out_sub_haz_class_1",             limit: 30
+    t.string   "psn_out_sub_haz_class_2",             limit: 30
+    t.string   "waste_type",                          limit: 20
+    t.string   "pih",                                 limit: 1
+    t.integer  "submitted_generator_user_id",         limit: 4
+    t.datetime "submitted_generator_at"
+    t.integer  "submitted_csr_user_id",               limit: 4
+    t.datetime "submitted_csr_at"
+    t.boolean  "size_5",                              limit: 1,                            default: false
+    t.boolean  "size_10",                             limit: 1,                            default: false
+    t.boolean  "size_20",                             limit: 1,                            default: false
+    t.boolean  "size_30",                             limit: 1,                            default: false
+    t.boolean  "size_40",                             limit: 1,                            default: false
+    t.boolean  "size_55",                             limit: 1,                            default: false
+    t.string   "sic_code",                            limit: 10
+    t.boolean  "temp_customer",                       limit: 1,                            default: false
+    t.string   "temp_customer_name",                  limit: 255
+    t.string   "temp_customer_address1",              limit: 255
+    t.string   "temp_customer_address2",              limit: 255
+    t.string   "temp_customer_city",                  limit: 255
+    t.string   "temp_customer_state",                 limit: 255
+    t.string   "temp_customer_zip",                   limit: 255
+    t.string   "temp_customer_contact",               limit: 255
+    t.string   "temp_customer_phone",                 limit: 255
+    t.string   "temp_customer_email",                 limit: 255
+    t.boolean  "temp_customer_sent",                  limit: 1,                            default: false
+    t.boolean  "temp_customer_assigned",              limit: 1,                            default: false
+    t.string   "temp_customer_epa_id",                limit: 15
+    t.string   "temp_customer_naics_code",            limit: 10
+  end
+
+  add_index "profiles", ["csr_id"], name: "index_profiles_on_csr_id", using: :btree
+
+  create_table "proper_ship_names", primary_key: "entry_no", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "ship_name_code",  limit: 10
+    t.string   "un_na",           limit: 6
+    t.string   "haz_class",       limit: 30
+    t.string   "pack_group_code", limit: 3
+    t.string   "erg_page_no",     limit: 10
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "proper_ship_names", ["entry_no"], name: "index_proper_ship_names_on_entry_no", using: :btree
+
+  create_table "source_codes", primary_key: "code", force: :cascade do |t|
+    t.string   "description", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sync_queues", force: :cascade do |t|
+    t.string   "action",        limit: 255
+    t.string   "syncable_id",   limit: 255
+    t.string   "syncable_type", limit: 255
+    t.string   "path",          limit: 255
+    t.boolean  "failed",        limit: 1,   default: false
+    t.boolean  "synced",        limit: 1,   default: false
+    t.datetime "synced_at"
+    t.string   "message",       limit: 255
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.string   "syncable_key",  limit: 255
+  end
+
+  create_table "underlying_constituents", primary_key: "code", force: :cascade do |t|
+    t.string   "description", limit: 100
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "user_customers", force: :cascade do |t|
+    t.integer  "user_id",     limit: 4
+    t.string   "customer_no", limit: 20
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "user_customers", ["customer_no"], name: "index_user_customers_on_customer_no", using: :btree
+  add_index "user_customers", ["user_id"], name: "index_user_customers_on_user_id", using: :btree
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                         limit: 255, default: "",    null: false
+    t.string   "encrypted_password",            limit: 255, default: "",    null: false
+    t.string   "reset_password_token",          limit: 255
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                 limit: 4,   default: 0,     null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip",            limit: 255
+    t.string   "last_sign_in_ip",               limit: 255
+    t.string   "confirmation_token",            limit: 255
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email",             limit: 255
+    t.integer  "failed_attempts",               limit: 4,   default: 0,     null: false
+    t.string   "unlock_token",                  limit: 255
+    t.datetime "locked_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name",                          limit: 100
+    t.string   "role",                          limit: 20
+    t.integer  "created_by",                    limit: 4
+    t.boolean  "login_requested",               limit: 1,   default: false
+    t.string   "login_request_customer_name",   limit: 255
+    t.string   "login_request_customer_number", limit: 255
+    t.string   "salesperson_code",              limit: 10,  default: ""
+  end
+
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
+
+  create_table "work_order_logs", force: :cascade do |t|
+    t.integer  "work_order_number", limit: 4
+    t.integer  "sequential_id",     limit: 4
+    t.string   "action",            limit: 10
+    t.datetime "action_at"
+    t.string   "issue",             limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "driver_code",       limit: 255
+  end
+
+  create_table "work_orders", primary_key: "number", force: :cascade do |t|
+    t.string   "driver_code",               limit: 255
+    t.datetime "scheduled_at"
+    t.string   "customer_number",           limit: 255
+    t.string   "name",                      limit: 255
+    t.string   "address",                   limit: 255
+    t.string   "city",                      limit: 255
+    t.string   "county",                    limit: 255
+    t.string   "contact",                   limit: 255
+    t.string   "phone",                     limit: 255
+    t.string   "service_level",             limit: 255
+    t.boolean  "chemist_to_print_manifest", limit: 1
+    t.string   "csr_code",                  limit: 255
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_foreign_key "user_customers", "users"
+end
