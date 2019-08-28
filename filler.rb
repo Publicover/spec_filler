@@ -6,7 +6,7 @@ def fill_factory(column, factory_name='')
   line_array = []
   next_line = false
   
-  File.foreach('schema.txt') do |line|
+  File.foreach('db/schema.txt') do |line|
     if line.chomp.empty? && next_line == true
       break
     end
@@ -21,9 +21,9 @@ def fill_factory(column, factory_name='')
   # line_array.delete("#{column}")
   # 
   # puts line_array[0]
-  File.open("#{column}.rb", 'w') do |file|
+  File.open("spec/factories/#{column}.rb", 'w') do |file|
     unless factory_name.empty?
-      file.print("\FactoryGirl.define do\nfactory :#{factory_name}, class: #{class_name} do\n")
+      file.print("FactoryGirl.define do\n\tfactory :#{factory_name}, class: #{class_name} do\n")
     else 
       file.print("FactoryGirl.define do\n\tfactory :#{column} do\n")
     end
