@@ -1,4 +1,5 @@
-#!/usr/bin/env ruby 
+#!/usr/bin/env ruby
 
 require 'spec_filler'
+
 SpecFiller.fill_factory(ARGV[0])
