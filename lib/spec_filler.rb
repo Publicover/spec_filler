@@ -1,6 +1,6 @@
 # require './schema.txt'
-
-class SpecFiller 
+module SpecFiller
+class Filler 
 
   def fill_factory(column, factory_name='')
 
@@ -50,4 +50,5 @@ class SpecFiller
   end
 
 # fill_factory('customers')
+end
 end

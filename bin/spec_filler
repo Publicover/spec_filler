@@ -2,4 +2,5 @@
 
 require 'spec_filler'
 
-SpecFiller.fill_factory(ARGV[0])
+filler = SpecFiller.Filler.new 
+filler.fill_factory(ARGV[0]
