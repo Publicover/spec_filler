@@ -1,6 +1,7 @@
 Gem::Specification.new do |s|
   s.name            = 'spec_filler'
-  s.version         = '0.0.2'
+  s.version         = '0.0.3'
+  s.executables     << 'spec_filler'
   s.date            = '2019-08-28'
   s.summary         = 'Create a FactoryBot file'
   s.description     = 'Use your schema to fill out a FactoryBot file'
