@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.description     = 'Use your schema to fill out a FactoryBot file'
   s.authors         = ['publicover']
   s.email           = 'jameslpublicover@gmail.com'
+  s.require_paths   = ['lib']
   s.files           = ['lib/spec_filler.rb']
   s.license         = 'MIT'
 end
