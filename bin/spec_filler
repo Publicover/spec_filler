@@ -3,4 +3,4 @@
 require 'spec_filler'
 
 filler = SpecFiller.Filler.new 
-filler.fill_factory(ARGV[0]
+filler.fill_factory(ARGV[0])
