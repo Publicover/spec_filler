@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name            = 'spec_filler'
-  s.version         = '0.0.1'
+  s.version         = '0.0.6'
   s.executables     = ['spec_filler']
   s.date            = '2019-08-28'
   s.summary         = 'Create a FactoryBot file'
